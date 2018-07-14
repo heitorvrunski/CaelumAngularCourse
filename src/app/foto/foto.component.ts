@@ -1,12 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
-  selector: 'foto',
+  selector: 'app-foto',
   templateUrl: './foto.component.html',
   styleUrls: ['./foto.component.css']
 })
 export class FotoComponent implements OnInit {
-
+  @Input() url = '';
+  @Input() title = '';
   constructor() { }
 
   ngOnInit() {

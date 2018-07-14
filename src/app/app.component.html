@@ -1,3 +1,7 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<h1>{{title}}</h1>
-<foto></foto>
+<header class="jumbotron">
+    <h1 class="text-center">{{title}}</h1>
+</header>
+<main class="container">
+    <app-foto *ngFor="let foto of fotos" [url]="foto.url" [title]="foto.titulo"></app-foto>
+</main>
