@@ -10,7 +10,7 @@ export class ListagemComponent implements OnInit {
 
   title = 'Caelum Pic';
   fotos: any;
-  constructor(http: HttpClient) {
+  constructor(private http: HttpClient) {
     http.get('http://localhost:3000/v1/fotos').subscribe((fotos) => {
       this.fotos = fotos;
     });
@@ -18,5 +18,13 @@ export class ListagemComponent implements OnInit {
 
   ngOnInit() {
   }
-
+  delete(foto) {
+    this.http.delete('http://localhost:3000/v1/fotos/' + foto._id).subscribe(() => {
+      this.fotos = Array.from(this.fotos).filter((fotoLoop) => {
+        if (fotoLoop !== foto) {
+          return fotoLoop;
+        }
+      });
+    });
+  }
 }

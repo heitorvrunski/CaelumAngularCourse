@@ -4,6 +4,8 @@
     <div class="row">
             <app-card class="" *ngFor="let foto of fotos" [foto]="foto" class="col-lg-4 col-md-4 col-sm-6">
                 <app-foto [url]="foto.url" [title]="foto.titulo"></app-foto>
+                <button (click)="delete(foto)" class="btn btn-danger">Delete</button>
             </app-card>
+            
     </div>
 </main>
