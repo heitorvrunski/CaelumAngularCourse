@@ -1,0 +1,27 @@
+<app-header></app-header>
+<main class="container">
+  <section class="row">
+    <form class="col-sm-7" (ngSubmit)="salvar()">
+      <div class="form-group">
+        <label for="Titulo">Titulo</label>
+        <input [(ngModel)]="foto.titulo" name="titulo" class="form-control" placeholder="Digite o Titulo">
+      </div>
+      <div class="form-group">
+        <label for="URL">URL</label>
+        <input [(ngModel)]="foto.url" name="url" class="form-control" placeholder="Digite a URL">
+      </div>
+      <div class="form-group">
+          <label>Descrição</label>
+          <textarea [(ngModel)]="foto.descricao" name="titulo" class="form-control" >
+          </textarea>
+        </div>
+      <a class="btn btn-secondary m-2" routerLink="">Voltar</a>
+      <button class="btn btn-primary">Salvar</button>
+    </form>
+    <aside class="col-sm-5">
+      <app-card *ngIf="foto.url" [foto]="foto">
+        <app-foto [title]="foto.titulo" [url]="foto.url"></app-foto>
+      </app-card>
+    </aside>
+  </section>
+</main>
