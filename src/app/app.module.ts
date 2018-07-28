@@ -9,13 +9,18 @@ import { ListagemComponent } from './listagem/listagem.component';
 import { CadastroComponent } from './cadastro/cadastro.component';
 import { appRoutes } from './app.routes';
 import { HeaderComponent } from './header/header.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FotoService } from './services/foto.service';
+import { MensagemComponent } from './mensagem/mensagem.component';
+import { FiltroPorTitulo } from './listagem/filtroPorTitulo.pipe';
 @NgModule({
    declarations: [
       AppComponent,
       ListagemComponent,
       CadastroComponent,
-      HeaderComponent
+      HeaderComponent,
+      MensagemComponent,
+      FiltroPorTitulo
    ],
    imports: [
       BrowserModule,
@@ -23,7 +28,8 @@ import { FormsModule } from '@angular/forms';
       CardModule,
       HttpClientModule,
       FormsModule,
-      RouterModule.forRoot(appRoutes)
+      RouterModule.forRoot(appRoutes),
+      ReactiveFormsModule
    ],
    providers: [],
    bootstrap: [

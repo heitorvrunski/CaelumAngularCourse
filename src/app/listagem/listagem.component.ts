@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient  } from '@angular/common/http';
+import { FotoService } from '../services/foto.service';
+import { Foto } from '../foto/foto';
 
 @Component({
   selector: 'app-listagem',
@@ -9,17 +11,17 @@ import { HttpClient  } from '@angular/common/http';
 export class ListagemComponent implements OnInit {
 
   title = 'Caelum Pic';
-  fotos: any;
-  constructor(private http: HttpClient) {
-    http.get('http://localhost:3000/v1/fotos').subscribe((fotos) => {
-      this.fotos = fotos;
-    });
+  fotos: Foto[] = [];
+  constructor(private fotoService: FotoService) {
   }
 
   ngOnInit() {
+    this.fotoService.listar().subscribe((fotos) => {
+      this.fotos = fotos;
+    });
   }
   delete(foto) {
-    this.http.delete('http://localhost:3000/v1/fotos/' + foto._id).subscribe(() => {
+    this.fotoService.deletar(foto._id).subscribe(() => {
       this.fotos = Array.from(this.fotos).filter((fotoLoop) => {
         if (fotoLoop !== foto) {
           return fotoLoop;

@@ -1,26 +1,40 @@
 <app-header></app-header>
 <main class="container">
+  <div *ngIf="mensagem.show" class="row">
+    <div class="col-12"><app-mensagem [tipo]="mensagem.tipo">{{foto.titulo}}: {{mensagem.texto}}</app-mensagem></div>
+  </div>
   <section class="row">
-    <form class="col-sm-7" (ngSubmit)="salvar()">
+    <form [formGroup]="formCadastro" class="col-sm-7" (ngSubmit)="salvar(formCadastro)">
       <div class="form-group">
         <label for="Titulo">Titulo</label>
-        <input [(ngModel)]="foto.titulo" name="titulo" class="form-control" placeholder="Digite o Titulo">
+        <input formControlName="titulo" name="titulo" class="form-control" placeholder="Digite o Titulo">
+        <div *ngIf="formCadastro.controls.titulo.errors && formCadastro.controls.titulo.touched">          
+          <app-mensagem tipo="danger" *ngIf="formCadastro.controls.titulo.errors.required">
+            Titulo é obrigatório
+          </app-mensagem>
+          <app-mensagem tipo="danger" *ngIf="formCadastro.controls.titulo.errors.minlength">
+              Mínimo de {{formCadastro.controls.titulo.errors.minlength.requiredLength }} caracteres
+            </app-mensagem>
+        </div>
       </div>
       <div class="form-group">
         <label for="URL">URL</label>
-        <input [(ngModel)]="foto.url" name="url" class="form-control" placeholder="Digite a URL">
+        <input formControlName="url" name="url" class="form-control" placeholder="Digite a URL">
+        <app-mensagem tipo="danger" *ngIf="formCadastro.controls.url.invalid && formCadastro.controls.url.touched">
+            URL é obrigatória
+          </app-mensagem>
       </div>
       <div class="form-group">
           <label>Descrição</label>
-          <textarea [(ngModel)]="foto.descricao" name="titulo" class="form-control" >
+          <textarea formControlName="descricao" name="descricao" class="form-control" >
           </textarea>
         </div>
       <a class="btn btn-secondary m-2" routerLink="">Voltar</a>
-      <button class="btn btn-primary">Salvar</button>
+      <button [disabled]="formCadastro.invalid" class="btn btn-primary">{{btnName}}</button>
     </form>
     <aside class="col-sm-5">
       <app-card *ngIf="foto.url" [foto]="foto">
-        <app-foto [title]="foto.titulo" [url]="foto.url"></app-foto>
+          <app-foto class ="foto" [title]="foto.titulo" [url]="foto.url"></app-foto>
       </app-card>
     </aside>
   </section>

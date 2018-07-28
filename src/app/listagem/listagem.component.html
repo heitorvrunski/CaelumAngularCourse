@@ -1,9 +1,21 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <app-header></app-header>
 <main class="container">
+    <div class="row mb-4">
+        <div class="col-12">
+            <form class="input-group">
+                <span class="input-group-prepend">
+                    <a routerLink="/cadastro" class="btn btn-primary">Nova foto</a>
+                </span>
+                <input (input)="true" #inputBusca type="search" class="form-control">
+            </form> 
+        </div>
+    </div>
     <div class="row">
-            <app-card class="" *ngFor="let foto of fotos" [foto]="foto" class="col-lg-4 col-md-4 col-sm-6">
-                <app-foto [url]="foto.url" [title]="foto.titulo"></app-foto>
+            <app-card class="" *ngFor="let foto of fotos | filtroPorTitulo:inputBusca.value" [foto]="foto" class="col-lg-4 col-md-4 col-sm-6">
+                <a class="foto" [routerLink]="['/cadastro', foto._id]">
+                    <app-foto [url]="foto.url" [title]="foto.titulo"></app-foto>
+                </a>
                 <button (click)="delete(foto)" class="btn btn-danger">Delete</button>
             </app-card>
             

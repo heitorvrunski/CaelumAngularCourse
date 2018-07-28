@@ -1,0 +1,36 @@
+<app-header></app-header>
+<main class="container">
+  <div *ngIf="mensagem.show" class="row">
+    <div class="col-12"><app-mensagem [tipo]="mensagem.tipo">{{foto.titulo}}: {{mensagem.texto}}</app-mensagem></div>
+  </div>
+  <section class="row">
+    <form #formCadastro="ngForm" class="col-sm-7" (ngSubmit)="salvar(formCadastro)">
+      <div class="form-group">
+        <label for="Titulo">Titulo</label>
+        <input #inputTitulo="ngModel" required [(ngModel)]="foto.titulo" name="titulo" class="form-control" placeholder="Digite o Titulo">
+        <app-mensagem tipo="danger" *ngIf="inputTitulo.invalid && inputTitulo.touched">
+          Titulo é obrigatório
+        </app-mensagem>
+      </div>
+      <div class="form-group">
+        <label for="URL">URL</label>
+        <input #inputURL="ngModel" required [(ngModel)]="foto.url" name="url" class="form-control" placeholder="Digite a URL">
+        <app-mensagem tipo="danger" *ngIf="inputURL.invalid && inputURL.touched">
+            URL é obrigatória
+          </app-mensagem>
+      </div>
+      <div class="form-group">
+          <label>Descrição</label>
+          <textarea [(ngModel)]="foto.descricao" name="descricao" class="form-control" >
+          </textarea>
+        </div>
+      <a class="btn btn-secondary m-2" routerLink="">Voltar</a>
+      <button [disabled]="formCadastro.invalid" class="btn btn-primary">{{btnName}}</button>
+    </form>
+    <aside class="col-sm-5">
+      <app-card *ngIf="foto.url" [foto]="foto">
+          <app-foto class ="foto" [title]="foto.titulo" [url]="foto.url"></app-foto>
+      </app-card>
+    </aside>
+  </section>
+</main>

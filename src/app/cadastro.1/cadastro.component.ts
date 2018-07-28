@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { FotoService } from '../services/foto.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Mensagem } from '../mensagem/mensagem';
-import { NgForm, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-cadastro',
@@ -15,39 +15,20 @@ export class CadastroComponent implements OnInit {
   foto = new Foto();
   mensagem = new Mensagem();
   btnName = 'Salvar';
-  formCadastro: FormGroup;
-
-  constructor(private fotoService: FotoService
-              , private rotaAtivada: ActivatedRoute
-              , private route: Router
-              , private formBuilder: FormBuilder)  {
+  constructor(private fotoService: FotoService, private rotaAtivada: ActivatedRoute, private route: Router)  {
    }
 
    ngOnInit() {
-      this.formCadastro = this.formBuilder.group({
-        titulo: ['', Validators.compose(
-          [
-            Validators.required,
-            Validators.minLength(5)
-          ]
-      )],
-        url: ['', Validators.required],
-        descricao: ''
-      });
      const fotoId = this.rotaAtivada.snapshot.params.fotoId;
      if (fotoId) {
         this.btnName = 'Atualizar';
         this.fotoService.buscar(fotoId).subscribe((foto) => {
           this.foto = foto;
-          this.formCadastro.patchValue(this.foto);
         });
     }
    }
 
   salvar(formCadastro: NgForm) {
-
-     this.foto = {...this.foto, ...this.formCadastro.value};
-
     if (this.foto._id) {
       this.fotoService.atualizar(this.foto).subscribe((res) => this.route.navigate(['']),
       (erro) => console.log(erro));
@@ -65,7 +46,8 @@ export class CadastroComponent implements OnInit {
         this.mensagem.show = true;
         setTimeout(() => {
           this.mensagem.show = false;
-          formCadastro.reset();
+          this.foto = new Foto();
+          formCadastro.resetForm();
         }, 2000);
       });
     }
